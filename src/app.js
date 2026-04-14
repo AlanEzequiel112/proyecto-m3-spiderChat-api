@@ -35,7 +35,7 @@ function renderMessages() {
 }
 
 // Evento enviar
-function handleSend() {
+async function handleSend() {
   const text = input.value.trim();
 
   if (!text) return;
@@ -43,10 +43,28 @@ function handleSend() {
   // Usuario
   addMessage("user", text);
 
-  // Respuesta fake (por ahora)
-  addMessage("bot", "Hey, tranquilo... estoy ocupado salvando la ciudad 🕷️");
-
   input.value = "";
+
+  renderMessages();
+
+  // Loading (mensaje temporal)
+  addMessage("bot", "...");
+  renderMessages();
+
+  try {
+    // Simulación async (después será fetch)
+    await new Promise((res) => setTimeout(res, 1000));
+
+    // Reemplazar último mensaje (loading)
+    const messages = getMessages();
+    messages[messages.length - 1].content =
+      "Hmm... interesante. Pero no te distraigas, hay crimen que detener 🕷️";
+
+  } catch (error) {
+    const messages = getMessages();
+    messages[messages.length - 1].content =
+      "Ups... algo salió mal. Culpa de algún villano seguro.";
+  }
 
   renderMessages();
 }
