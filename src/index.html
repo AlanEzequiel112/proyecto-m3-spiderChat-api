@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spider Chat</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- HEADER -->
+    <header class="chat-header">
+      <div>
+        <h1>Spider-Man</h1>
+        <span class="status">Online</span>
+      </div>
+      <button class="close-btn">✕</button>
+    </header>
+
+    <!-- MENSAJES -->
+    <main class="chat-container" id="chat-container">
+      <p class="empty-message">Empieza la conversación con Spider-Man.</p>
+    </main>
+
+    <!-- INPUT -->
+    <footer class="chat-input">
+      <input 
+        type="text" 
+        id="message-input" 
+        placeholder="Escribe un mensaje"
+      />
+      <button id="send-btn">Enviar</button>
+    </footer>
+
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

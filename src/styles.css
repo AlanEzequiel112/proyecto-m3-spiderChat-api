@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background: #e5e7eb;
+}
+
+#app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f3f4f6;
+  border-bottom: 1px solid #ddd;
+}
+
+.chat-header h1 {
+  font-size: 18px;
+}
+
+.status {
+  font-size: 12px;
+  color: gray;
+}
+
+.close-btn {
+  background: #e0e7ff;
+  border: none;
+  border-radius: 50%;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* CHAT */
+.chat-container {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #6b7280;
+}
+
+.empty-message {
+  text-align: center;
+}
+
+/* INPUT */
+.chat-input {
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  background: #f3f4f6;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.chat-input button {
+  padding: 12px 20px;
+  border-radius: 20px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+}  
+
+.message {
+  max-width: 70%;
+  padding: 10px 14px;
+  margin: 6px 0;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+/* Usuario */
+.message.user {
+  align-self: flex-end;
+  background: #3b82f6;
+  color: white;
+}
+
+/* Spider-Man */
+.message.bot {
+  align-self: flex-start;
+  background: #e5e7eb;
+}
