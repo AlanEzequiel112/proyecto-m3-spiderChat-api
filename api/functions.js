@@ -18,6 +18,9 @@ export default async function handler(req, res) {
 
     const apiKey = process.env.GEMINI_API_KEY;
 
+  
+    const limitedMessages = messages.slice(-10);
+
     const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" +
         apiKey,
@@ -28,17 +31,25 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           contents: [
-  {
-    role: "user",
-    parts: [{ text: systemPrompt }],
-  },
-  ...messages.map((msg) => ({
-    role: msg.role === "user" ? "user" : "model",
-    parts: [{ text: msg.content }],
-  })),
-],
-}),
-});
+            
+            {
+              role: "user",
+              parts: [{ text: systemPrompt }],
+            },
+            {
+              role: "model",
+              parts: [{ text: "Entendido. Actuaré como Spider-Man." }],
+            },
+
+            
+            ...limitedMessages.map((msg) => ({
+              role: msg.role === "user" ? "user" : "model",
+              parts: [{ text: msg.content }],
+            })),
+          ],
+        }),
+      }
+    );
 
     const data = await response.json();
 
