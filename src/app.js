@@ -109,11 +109,27 @@ async function handleSend() {
   const chatContainer = document.getElementById("chat-container");
   chatContainer.scrollTop = chatContainer.scrollHeight;
 
-  await new Promise((res) => setTimeout(res, 800));
+  try {
+  const response = await fetch("/api/functions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      messages: getMessages(),
+    }),
+  });
+
+  const data = await response.json();
 
   const messages = getMessages();
+  messages[messages.length - 1].content = data.reply;
+
+} catch (error) {
+  const messages = getMessages();
   messages[messages.length - 1].content =
-    "Sigo en patrulla... ¿necesitás ayuda? 🕷️";
+    "Ups... algo salió mal 🕷️";
+}
 
   renderMessages();
 }
