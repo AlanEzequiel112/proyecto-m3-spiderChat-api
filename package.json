@@ -1,0 +1,9 @@
+{
+  "name": "spider-chat",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "echo dev",
+    "build": "echo build"
+  }
+}
