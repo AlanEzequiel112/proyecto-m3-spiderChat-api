@@ -1,4 +1,4 @@
-import { addMessage, getMessages } from ".chat.js";
+import { addMessage, getMessages } from "./chat.js";
 
 const view = document.getElementById("view");
 
