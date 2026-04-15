@@ -10,31 +10,17 @@
 
   <div id="app">
 
-    <!-- HEADER -->
-    <header class="chat-header">
-      <div>
-        <h1>Spider-Man</h1>
-        <span class="status">Online</span>
-      </div>
-      <button class="close-btn">✕</button>
-    </header>
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="/home" data-link>Home</a>
+    <a href="/chat" data-link>Chat</a>
+    <a href="/about" data-link>About</a>
+  </nav>
 
-    <!-- MENSAJES -->
-    <main class="chat-container" id="chat-container">
-      <p class="empty-message">Empieza la conversación con Spider-Man.</p>
-    </main>
+  <!-- VISTAS -->
+  <div id="view"></div>
 
-    <!-- INPUT -->
-    <footer class="chat-input">
-      <input 
-        type="text" 
-        id="message-input" 
-        placeholder="Escribe un mensaje"
-      />
-      <button id="send-btn">Enviar</button>
-    </footer>
-
-  </div>
+</div>
 
   <script type="module" src="./app.js"></script>
 </body>

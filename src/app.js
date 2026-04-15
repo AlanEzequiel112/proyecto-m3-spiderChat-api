@@ -1,12 +1,50 @@
 import { addMessage, getMessages } from "./chat.js";
 
-const input = document.getElementById("message-input");
-const button = document.getElementById("send-btn");
-const chatContainer = document.getElementById("chat-container");
+const view = document.getElementById("view");
 
-// Render mensajes
+// ---------- VISTAS ----------
+
+function Home() {
+  return `
+    <h2>Home</h2>
+    <p>Bienvenido al chat de Spider-Man 🕷️</p>
+  `;
+}
+
+function About() {
+  return `
+    <h2>About</h2>
+    <p>Proyecto SPA con Gemini AI</p>
+  `;
+}
+
+function Chat() {
+  return `
+    <div class="chat-view">
+
+      <div class="chat-header">
+        <div>
+          <h1>Spider-Man</h1>
+          <span class="status">Online</span>
+        </div>
+      </div>
+
+      <main class="chat-container" id="chat-container"></main>
+
+      <footer class="chat-input">
+        <input id="message-input" placeholder="Escribe un mensaje"/>
+        <button id="send-btn">Enviar</button>
+      </footer>
+
+    </div>
+  `;
+}
+
+// ---------- RENDER ----------
+
 function renderMessages() {
-  chatContainer.innerHTML = "";
+  const chatContainer = document.getElementById("chat-container");
+  if (!chatContainer) return;
 
   const messages = getMessages();
 
@@ -16,67 +54,91 @@ function renderMessages() {
     return;
   }
 
+  chatContainer.innerHTML = "";
+
   messages.forEach((msg) => {
     const div = document.createElement("div");
-    div.classList.add("message");
-
-    if (msg.role === "user") {
-      div.classList.add("user");
-    } else {
-      div.classList.add("bot");
-    }
-
+    div.classList.add("message", msg.role === "user" ? "user" : "bot");
     div.textContent = msg.content;
     chatContainer.appendChild(div);
   });
 
-  // Scroll automático
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-// Evento enviar
-async function handleSend() {
-  const text = input.value.trim();
+// ---------- CHAT LOGIC ----------
 
-  if (!text) return;
+function setupChatEvents() {
+  const input = document.getElementById("message-input");
+  const button = document.getElementById("send-btn");
 
-  // Usuario
-  addMessage("user", text);
+  if (!input || !button) return;
 
-  input.value = "";
+  async function handleSend() {
+    const text = input.value.trim();
+    if (!text) return;
 
-  renderMessages();
+    addMessage("user", text);
+    input.value = "";
+    renderMessages();
 
-  // Loading (mensaje temporal)
-  addMessage("bot", "...");
-  renderMessages();
+    addMessage("bot", "...");
+    renderMessages();
 
-  try {
-    // Simulación async (después será fetch)
-    await new Promise((res) => setTimeout(res, 1000));
+    try {
+      await new Promise((res) => setTimeout(res, 1000));
 
-    // Reemplazar último mensaje (loading)
-    const messages = getMessages();
-    messages[messages.length - 1].content =
-      "Hmm... interesante. Pero no te distraigas, hay crimen que detener 🕷️";
+      const messages = getMessages();
+      messages[messages.length - 1].content =
+        "No puedo hablar mucho... hay un ladrón escapando 🕷️";
 
-  } catch (error) {
-    const messages = getMessages();
-    messages[messages.length - 1].content =
-      "Ups... algo salió mal. Culpa de algún villano seguro.";
+    } catch {
+      const messages = getMessages();
+      messages[messages.length - 1].content =
+        "Ups... algo salió mal.";
+    }
+
+    renderMessages();
   }
 
-  renderMessages();
+  button.addEventListener("click", handleSend);
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") handleSend();
+  });
 }
 
-button.addEventListener("click", handleSend);
+// ---------- ROUTER ----------
 
-// Enter para enviar
-input.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    handleSend();
+function router() {
+  const path = window.location.pathname;
+
+  if (path === "/" || path === "/home") {
+    view.innerHTML = Home();
+  } else if (path === "/chat") {
+    view.innerHTML = Chat();
+    renderMessages();
+    setupChatEvents();
+  } else if (path === "/about") {
+    view.innerHTML = About();
+  } else {
+    view.innerHTML = "<h2>404</h2>";
+  }
+}
+
+// ---------- NAV ----------
+
+document.addEventListener("click", (e) => {
+  if (e.target.matches("[data-link]")) {
+    e.preventDefault();
+    const href = e.target.getAttribute("href");
+
+    history.pushState(null, null, href);
+    router();
   }
 });
 
-// Render inicial
-renderMessages();
+window.addEventListener("popstate", router);
+
+// ---------- INIT ----------
+
+router();

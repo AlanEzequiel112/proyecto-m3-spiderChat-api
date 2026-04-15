@@ -50,7 +50,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  color: #6b7280;
 }
 
 .empty-message {
@@ -101,4 +100,22 @@ body {
 .message.bot {
   align-self: flex-start;
   background: #e5e7eb;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background: #111;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+}
+
+.chat-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
