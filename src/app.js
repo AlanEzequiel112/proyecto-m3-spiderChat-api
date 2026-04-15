@@ -139,16 +139,15 @@ function router() {
 // ---------- NAV ----------
 
 document.addEventListener("click", (e) => {
-  if (e.target.matches("[data-link]")) {
+  const link = e.target.closest("[data-link]");
+  if (link) {
     e.preventDefault();
-    const href = e.target.getAttribute("href");
+    const href = link.getAttribute("href");
 
     history.pushState(null, null, href);
     router();
   }
-});
-
-window.addEventListener("popstate", router);
+} );
 
 // ---------- INIT ----------
 
