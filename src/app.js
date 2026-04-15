@@ -40,6 +40,21 @@ function Chat() {
   `;
 }
 
+// ---------- EVENTOS ----------
+
+function setupChatEvents() {
+  const input = document.getElementById("message-input");
+  const button = document.getElementById("send-btn");
+
+  if (!input || !button) return;
+
+  button.addEventListener("click", handleSend);
+
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") handleSend();
+  });
+}
+
 // ---------- RENDER ----------
 
 function renderMessages() {
@@ -54,11 +69,13 @@ function renderMessages() {
     return;
   }
 
+  const shouldScroll = isNearBottom(chatContainer);
+
   chatContainer.innerHTML = "";
 
   const spacer = document.createElement("div");
-spacer.style.flex = "1";
-chatContainer.appendChild(spacer);
+  spacer.style.flex = "1";
+  chatContainer.appendChild(spacer);
 
   messages.forEach((msg) => {
     const div = document.createElement("div");
@@ -67,48 +84,38 @@ chatContainer.appendChild(spacer);
     chatContainer.appendChild(div);
   });
 
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+  if (shouldScroll) {
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
 }
 
 // ---------- CHAT LOGIC ----------
 
-function setupChatEvents() {
+async function handleSend() {
   const input = document.getElementById("message-input");
-  const button = document.getElementById("send-btn");
+  const text = input.value.trim();
+  if (!text) return;
 
-  if (!input || !button) return;
+  // Usuario
+  addMessage("user", text);
+  input.value = "";
+  renderMessages();
 
-  async function handleSend() {
-    const text = input.value.trim();
-    if (!text) return;
+  // Mensaje temporal
+  addMessage("bot", "...");
+  renderMessages();
 
-    addMessage("user", text);
-    input.value = "";
-    renderMessages();
+  // Scroll inmediato
+  const chatContainer = document.getElementById("chat-container");
+  chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    addMessage("bot", "...");
-    renderMessages();
+  await new Promise((res) => setTimeout(res, 800));
 
-    try {
-      await new Promise((res) => setTimeout(res, 1000));
+  const messages = getMessages();
+  messages[messages.length - 1].content =
+    "Sigo en patrulla... ¿necesitás ayuda? 🕷️";
 
-      const messages = getMessages();
-      messages[messages.length - 1].content =
-        "No puedo hablar mucho... hay un ladrón escapando 🕷️";
-
-    } catch {
-      const messages = getMessages();
-      messages[messages.length - 1].content =
-        "Ups... algo salió mal.";
-    }
-
-    renderMessages();
-  }
-
-  button.addEventListener("click", handleSend);
-  input.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") handleSend();
-  });
+  renderMessages();
 }
 
 // ---------- ROUTER ----------
@@ -146,3 +153,11 @@ window.addEventListener("popstate", router);
 // ---------- INIT ----------
 
 router();
+
+function isNearBottom(container) {
+  const threshold = 50; // margen en px
+  return (
+    container.scrollHeight - container.scrollTop - container.clientHeight <
+    threshold
+  );
+}
