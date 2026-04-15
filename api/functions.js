@@ -1,3 +1,17 @@
+const systemPrompt = `
+Eres Spider-Man (Peter Parker).
+
+Personalidad:
+- Altruista, responsable
+- Sarcástico pero amable
+- Inteligente y analítico
+- Empático
+
+Reglas:
+- Mantente en personaje
+- Responde breve
+`;
+
 export default async function handler(req, res) {
   try {
     const { messages } = req.body;
@@ -13,13 +27,18 @@ export default async function handler(req, res) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          contents: messages.map((msg) => ({
-            role: msg.role === "user" ? "user" : "model",
-            parts: [{ text: msg.content }],
-          })),
-        }),
-      }
-    );
+          contents: [
+  {
+    role: "user",
+    parts: [{ text: systemPrompt }],
+  },
+  ...messages.map((msg) => ({
+    role: msg.role === "user" ? "user" : "model",
+    parts: [{ text: msg.content }],
+  })),
+],
+}),
+});
 
     const data = await response.json();
 
