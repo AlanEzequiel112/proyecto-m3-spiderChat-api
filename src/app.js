@@ -105,31 +105,30 @@ async function handleSend() {
   addMessage("bot", "...");
   renderMessages();
 
-  // Scroll inmediato
   const chatContainer = document.getElementById("chat-container");
   chatContainer.scrollTop = chatContainer.scrollHeight;
 
   try {
-  const response = await fetch("/api/functions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      messages: getMessages(),
-    }),
-  });
+    const response = await fetch("/api/functions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messages: getMessages(),
+      }),
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  const messages = getMessages();
-  messages[messages.length - 1].content = data.reply;
+    const messages = getMessages();
+    messages[messages.length - 1].content = data.reply;
 
-} catch (error) {
-  const messages = getMessages();
-  messages[messages.length - 1].content =
-    "Ups... algo salió mal 🕷️";
-}
+  } catch (error) {
+    const messages = getMessages();
+    messages[messages.length - 1].content =
+      "Ups... algo salió mal 🕷️";
+  }
 
   renderMessages();
 }
