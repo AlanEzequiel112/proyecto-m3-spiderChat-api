@@ -56,6 +56,10 @@ function renderMessages() {
 
   chatContainer.innerHTML = "";
 
+  const spacer = document.createElement("div");
+spacer.style.flex = "1";
+chatContainer.appendChild(spacer);
+
   messages.forEach((msg) => {
     const div = document.createElement("div");
     div.classList.add("message", msg.role === "user" ? "user" : "bot");
