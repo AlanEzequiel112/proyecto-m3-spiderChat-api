@@ -170,3 +170,27 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.home-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+  text-align: center;
+}
+
+.start-btn {
+  padding: 12px 20px;
+  border-radius: 25px;
+  background: #ef4444;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.start-btn:hover {
+  background: #dc2626;
+}

@@ -6,8 +6,14 @@ const view = document.getElementById("view");
 
 function Home() {
   return `
-    <h2>Home</h2>
-    <p>Bienvenido al chat de Spider-Man 🕷️</p>
+    <div class="home-view">
+      <h2>🕷️ Spider Chat</h2>
+      <p>Chatea con Spider-Man en tiempo real.</p>
+
+      <a href="/chat" data-link class="start-btn">
+        Empezar chat
+      </a>
+    </div>
   `;
 }
 
@@ -160,6 +166,8 @@ document.addEventListener("click", (e) => {
     router();
   }
 } );
+
+window.addEventListener("popstate", router);
 
 // ---------- INIT ----------
 
