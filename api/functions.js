@@ -51,6 +51,14 @@ Reglas:
 
     const data = await response.json();
 
+    if (data.error) {
+  console.log("ERROR GEMINI:", data.error);
+
+  return res.status(200).json({
+    reply: "Hmm… mis sensores arácnidos están fallando 🕷️. Intentá de nuevo en un rato."
+  });
+}
+
 
 console.log("GEMINI RESPONSE:", JSON.stringify(data));
 
@@ -70,6 +78,8 @@ if (
     return res.status(200).json({ reply });
 
   } catch (error) {
-    return res.status(500).json({ error: "Error en servidor" });
-  }
+  return res.status(200).json({
+    reply: "Ey, soy Spider-Man 🕷️. Algo salió mal en la red… pero sigo atento. ¿Qué necesitás?"
+  });
+}
 }
