@@ -97,10 +97,16 @@ function renderMessages() {
 
 // ---------- CHAT LOGIC ----------
 
+const button = document.getElementById("send-btn");
+button.disabled = true;
+
 async function handleSend() {
   const input = document.getElementById("message-input");
   const text = input.value.trim();
   if (!text) return;
+
+  const button = document.getElementById("send-btn");
+  button.disabled = true;
 
   // Usuario
   addMessage("user", text);
@@ -130,20 +136,19 @@ async function handleSend() {
     // render para que exista en DOM
     renderMessages();
 
-    // agarrar último mensaje en pantalla
     const messageElements = chatContainer.querySelectorAll(".message");
     const lastElement = messageElements[messageElements.length - 1];
 
-    // animar escritura
     await typeMessage(lastElement, data.reply);
 
-    // guardar contenido final
     lastMessage.content = data.reply;
 
   } catch (error) {
     const messages = getMessages();
     messages[messages.length - 1].content =
-      "Error al conectar con Spider-Man 🕷️";
+      "Error al conectar con Spider-Man";
+  } finally {
+    button.disabled = false;
   }
 
   renderMessages();
