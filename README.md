@@ -133,7 +133,47 @@ Para asegurar el correcto funcionamiento del sistema, se implementó un mecanism
 
 ---
 
+## 🤖 Uso de Inteligencia Artificial
+
+Durante el desarrollo del proyecto se utilizaron herramientas de inteligencia artificial como apoyo para resolver problemas técnicos y mejorar la implementación.
+
+### Prompts utilizados
+
+* “Cómo implementar una SPA con JavaScript y History API”
+* “Cómo estructurar una serverless function en Vercel”
+* “Cómo manejar errores en fetch y APIs externas”
+* “Cómo desplegar correctamente una aplicación en Vercel”
+* “Cómo mejorar la experiencia de usuario en un chat”
+* “Cómo implementar tests básicos con Vitest”
+
+### Influencia en la implementación
+
+Las respuestas obtenidas sirvieron como guía para:
+
+* Organizar la estructura del proyecto (frontend / backend)
+* Implementar el routing de la SPA
+* Integrar la API de Gemini mediante una serverless function
+* Resolver problemas de despliegue y rutas en Vercel
+* Mejorar la experiencia de usuario (mensajes, estados, feedback)
+* Implementar tests unitarios básicos
+
+### Decisiones tomadas
+
+A partir de las sugerencias de la IA, se tomaron decisiones como:
+
+* Utilizar una arquitectura desacoplada (frontend + API)
+* Implementar manejo de errores con respuestas fallback
+* Limitar el historial de mensajes para optimizar el rendimiento
+* Configurar correctamente las rutas en Vercel para evitar errores 404
+* Priorizar una interfaz simple, clara y funcional
+* Evitar soluciones complejas que no aportaban valor al objetivo del proyecto
+
+La inteligencia artificial fue utilizada como herramienta de apoyo para destrabar problemas y orientar decisiones, manteniendo siempre el control sobre la implementación final del proyecto.
+
+---
+
 ## 👤 Autor
 
 - Nombre: Ezequiel Cardiello
 - Proyecto: M3 - Spider Chat
+
