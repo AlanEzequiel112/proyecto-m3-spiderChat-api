@@ -49,7 +49,6 @@ Reglas:
 
     const data = await response.json();
 
-    const data = await response.json();
 
 console.log("GEMINI RESPONSE:", JSON.stringify(data));
 
