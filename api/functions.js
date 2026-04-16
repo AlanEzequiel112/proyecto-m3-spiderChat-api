@@ -12,13 +12,17 @@ Reglas:
 - Responde breve
 `;
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
   try {
     const { messages } = req.body;
 
     const apiKey = process.env.GEMINI_API_KEY;
 
-  
+    // Limitamos el contexto
     const limitedMessages = messages.slice(-10);
 
     const response = await fetch(
@@ -31,17 +35,14 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           contents: [
-            
             {
               role: "user",
-              parts: [{ text: systemPrompt }],
+              parts: [{ text: "Sos Spider-Man. Respondé como él." }],
             },
             {
               role: "model",
-              parts: [{ text: "Entendido. Actuaré como Spider-Man." }],
+              parts: [{ text: "Entendido." }],
             },
-
-            
             ...limitedMessages.map((msg) => ({
               role: msg.role === "user" ? "user" : "model",
               parts: [{ text: msg.content }],
@@ -55,10 +56,11 @@ export default async function handler(req, res) {
 
     const text =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No tengo respuesta ahora... intenta otra vez 🕷️";
+      "No tengo respuesta ahora... 🕷️";
 
     res.status(200).json({ reply: text });
+
   } catch (error) {
     res.status(500).json({ error: "Error en el servidor" });
   }
-}
+};
