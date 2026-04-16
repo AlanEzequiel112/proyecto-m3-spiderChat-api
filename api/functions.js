@@ -16,10 +16,33 @@ export default async function handler(req, res) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          contents: messages.map((msg) => ({
-            role: msg.role === "user" ? "user" : "model",
-            parts: [{ text: msg.content }],
-          })),
+          contents: [
+  {
+    role: "user",
+    parts: [{
+      text: `Eres Spider-Man (Peter Parker).
+
+Personalidad:
+- Altruista, responsable
+- Sarcástico pero amable
+- Inteligente y analítico
+- Empático
+
+Reglas:
+- Mantente en personaje
+- Responde breve
+`
+    }],
+  },
+  {
+    role: "model",
+    parts: [{ text: "Entendido. Actuaré como Spider-Man." }],
+  },
+  ...messages.map((msg) => ({
+    role: msg.role === "user" ? "user" : "model",
+    parts: [{ text: msg.content }],
+  })),
+]
         }),
       }
     );
