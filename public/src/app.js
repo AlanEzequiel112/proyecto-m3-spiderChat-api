@@ -112,7 +112,7 @@ async function handleSend() {
   renderMessages();
 
   // Mensaje temporal
-  addMessage("bot", "...");
+  addMessage("bot", "Escribiendo...");
   renderMessages();
 
   const chatContainer = document.getElementById("chat-container");
