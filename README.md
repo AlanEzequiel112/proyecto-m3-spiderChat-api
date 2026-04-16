@@ -32,18 +32,22 @@ El proyecto implementa una arquitectura moderna basada en frontend desacoplado y
 ## 📦 Estructura del proyecto
 /
 ├── api/
-│ └── functions.js # Serverless function (backend)
+│ └── functions.js # Serverless function (backend - Gemini proxy)
 ├── public/
 │ ├── index.html
 │ └── src/
-│   ├── app.js
-│   ├── chat.js
-│   ├── utils.js
-│   └── styles.css
+│ ├── app.js # Lógica principal y routing SPA
+│ ├── chat.js # Manejo del chat y mensajes
+│ ├── utils.js # Funciones auxiliares
+│ └── styles.css # Estilos de la aplicación
 ├── tests/
-│ ├── app.test.js
-│ └──utils.test.js
+│ ├── app.test.js # Tests de lógica principal
+│ └── utils.test.js # Tests de utilidades
+├── .env # Variables de entorno (local)
+├── .env.example # Ejemplo de configuración
+├── .gitignore
 ├── package.json
+├── vercel.json # Configuración de rutas y deploy
 └── README.md
 
 
