@@ -1,25 +1,15 @@
-const systemPrompt = `
-Eres Spider-Man (Peter Parker).
-
-Personalidad:
-- Altruista, responsable
-- Sarcástico pero amable
-- Inteligente y analítico
-- Empático
-
-Reglas:
-- Mantente en personaje
-- Responde breve
-`;
-
 const fetch = require("node-fetch");
 
 module.exports = async (req, res) => {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
   try {
+    console.log("REQ METHOD:", req.method);
+
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
+
+    console.log("REQ BODY:", req.body);
+
     const body =
       typeof req.body === "string"
         ? JSON.parse(req.body)
@@ -27,13 +17,15 @@ module.exports = async (req, res) => {
 
     const messages = body?.messages || [];
 
+    console.log("MESSAGES:", messages);
+
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return res.status(500).json({ error: "Falta API KEY" });
     }
 
-    const limitedMessages = messages.slice(-10);
+    console.log("API KEY OK");
 
     const response = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" +
@@ -44,7 +36,7 @@ module.exports = async (req, res) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          contents: limitedMessages.map((msg) => ({
+          contents: messages.map((msg) => ({
             role: msg.role === "user" ? "user" : "model",
             parts: [{ text: msg.content }],
           })),
@@ -52,21 +44,16 @@ module.exports = async (req, res) => {
       }
     );
 
-    if (!response.ok) {
-  const errorText = await response.text();
-  return res.status(500).json({ error: errorText });
-}
+    console.log("FETCH STATUS:", response.status);
 
-const data = await response.json();
+    const textResponse = await response.text();
 
-    const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No tengo respuesta ahora... 🕷️";
+    console.log("RAW RESPONSE:", textResponse);
 
-    return res.status(200).json({ reply: text });
+    return res.status(200).json({ raw: textResponse });
 
   } catch (error) {
-  console.error("ERROR REAL:", error);
-  return res.status(500).json({ error: error.message });
-}
+    console.error("ERROR TOTAL:", error);
+    return res.status(500).json({ error: error.message });
+  }
 };
