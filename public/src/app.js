@@ -109,26 +109,23 @@ async function handleSend() {
   chatContainer.scrollTop = chatContainer.scrollHeight;
 
   try {
-    const response = await fetch("/api/functions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: getMessages(),
-      }),
-    });
+  const messages = getMessages();
 
-    const data = await response.json();
+  const response = await fetch("/api/functions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages }),
+  });
 
-    const messages = getMessages();
-    messages[messages.length - 1].content = data.reply;
+  const data = await response.json();
 
-  } catch (error) {
-    const messages = getMessages();
-    messages[messages.length - 1].content =
-      "Error al conectar con Spider-Man 🕷️";
-  }
+  messages[messages.length - 1].content = data.reply;
+
+} catch (error) {
+  const messages = getMessages();
+  messages[messages.length - 1].content =
+    "Error al conectar con Spider-Man 🕷️";
+}
 
   renderMessages();
 }
