@@ -18,11 +18,19 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { messages } = req.body;
+    const body =
+      typeof req.body === "string"
+        ? JSON.parse(req.body)
+        : req.body;
+
+    const messages = body?.messages || [];
 
     const apiKey = process.env.GEMINI_API_KEY;
 
-    // Limitamos el contexto
+    if (!apiKey) {
+      return res.status(500).json({ error: "Falta API KEY" });
+    }
+
     const limitedMessages = messages.slice(-10);
 
     const response = await fetch(
@@ -34,20 +42,10 @@ module.exports = async (req, res) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: "Sos Spider-Man. Respondé como él." }],
-            },
-            {
-              role: "model",
-              parts: [{ text: "Entendido." }],
-            },
-            ...limitedMessages.map((msg) => ({
-              role: msg.role === "user" ? "user" : "model",
-              parts: [{ text: msg.content }],
-            })),
-          ],
+          contents: limitedMessages.map((msg) => ({
+            role: msg.role === "user" ? "user" : "model",
+            parts: [{ text: msg.content }],
+          })),
         }),
       }
     );
@@ -58,9 +56,9 @@ module.exports = async (req, res) => {
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "No tengo respuesta ahora... 🕷️";
 
-    res.status(200).json({ reply: text });
+    return res.status(200).json({ reply: text });
 
   } catch (error) {
-    res.status(500).json({ error: "Error en el servidor" });
+    return res.status(500).json({ error: "Error en el servidor" });
   }
 };
