@@ -1,0 +1,135 @@
+# 🕷️ Spider Chat - Proyecto M3
+
+Aplicación web tipo chat que simula una conversación con Spider-Man utilizando inteligencia artificial (Gemini), desarrollada como Single Page Application (SPA) y desplegada en Vercel.
+
+---
+
+## 🚀 Demo
+
+🔗 https://proyecto-m3-spider-chat-api.vercel.app
+
+---
+
+## 🧠 Descripción
+
+Spider Chat es una aplicación interactiva que permite a los usuarios conversar con Spider-Man (Peter Parker), quien responde con una personalidad definida: altruista, sarcástico, empático e inteligente.
+
+El proyecto implementa una arquitectura moderna basada en frontend desacoplado y una serverless function que actúa como intermediario seguro entre el cliente y la API de Gemini.
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+- HTML5
+- CSS3 (Flexbox / Grid)
+- JavaScript (ES Modules)
+- Fetch API + async/await
+- Gemini AI (Google)
+- Vercel (Serverless Functions)
+
+---
+
+## 📦 Estructura del proyecto
+/
+├── api/
+│ └── functions.js # Serverless function (backend)
+├── public/
+│ ├── index.html
+│ └── src/
+│   ├── app.js
+│   ├── chat.js
+│   ├── utils.js
+│   └── styles.css
+├── tests/
+│ ├── app.test.js
+│ └──utils.test.js
+├── package.json
+└── README.md
+
+
+---
+
+## ⚙️ Funcionalidades
+
+- Chat interactivo con IA
+- Respuestas con personalidad (Spider-Man)
+- Manejo de historial de conversación en memoria
+- Scroll automático en el chat
+- Navegación SPA (Home, Chat, About)
+- Routing con History API
+- Diseño responsive (mobile-first)
+- Manejo de estados de error y carga
+
+---
+
+## 🔄 Funcionamiento
+
+1. El usuario escribe un mensaje en el chat
+2. El frontend envía el historial de mensajes a `/api/functions`
+3. La serverless function procesa la solicitud
+4. Se realiza una llamada a la API de Gemini
+5. Se obtiene la respuesta del modelo
+6. Se devuelve al frontend
+7. Se renderiza en la interfaz
+
+---
+
+## 🔐 Seguridad
+
+- La API Key de Gemini se maneja exclusivamente en el backend
+- No se expone información sensible en el frontend
+- Uso de variables de entorno en Vercel
+
+---
+
+## ⚠️ Manejo de errores
+
+La aplicación implementa manejo de errores robusto para asegurar continuidad:
+
+- Si la API de Gemini falla
+- Si se alcanza el límite de cuota
+- Si ocurre un error de red
+
+Se devuelven respuestas fallback con personalidad del personaje, evitando que la aplicación se rompa:
+
+> "Hmm… mis sensores arácnidos están fallando 🕷️..."
+
+Esto garantiza una experiencia de usuario consistente.
+
+---
+
+## 🌐 Deploy
+
+El proyecto está desplegado en Vercel, incluyendo:
+
+- Frontend estático
+- Serverless Function
+- Variables de entorno configuradas
+
+---
+
+## 📚 Conceptos aplicados
+
+- Single Page Application (SPA)
+- History API
+- Arquitectura cliente-servidor
+- Serverless Functions
+- Programación asíncrona (async/await)
+- Integración con APIs externas
+- Manejo de estado en frontend
+- Experiencia de usuario (UX)
+
+---
+
+## 📌 Notas
+
+La integración con Gemini puede verse limitada por cuota de uso de la API.
+
+Para asegurar el correcto funcionamiento del sistema, se implementó un mecanismo de fallback que permite continuar la conversación incluso en caso de error.
+
+---
+
+## 👤 Autor
+
+- Nombre: Ezequiel Cardiello
+- Proyecto: M3 - Spider Chat

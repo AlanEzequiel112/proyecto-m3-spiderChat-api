@@ -52,10 +52,17 @@ Reglas:
     const data = await response.json();
 
     if (data.error) {
-  console.log("ERROR GEMINI:", data.error);
+  const fallbackReplies = [
+    "Hmm… mis sensores arácnidos están fallando 🕷️. Intentá de nuevo en un rato.",
+    "Algo raro pasa en la ciudad… pero sigo atento 🕷️",
+    "No puedo responder ahora, pero sigo patrullando 🕷️",
+  ];
+
+  const randomReply =
+    fallbackReplies[Math.floor(Math.random() * fallbackReplies.length)];
 
   return res.status(200).json({
-    reply: "Hmm… mis sensores arácnidos están fallando 🕷️. Intentá de nuevo en un rato."
+    reply: randomReply
   });
 }
 
@@ -78,8 +85,16 @@ if (
     return res.status(200).json({ reply });
 
   } catch (error) {
+  const fallbackReplies = [
+    "Ey, soy Spider-Man 🕷️. Algo salió mal en la red… pero sigo atento.",
+    "Hmm… hoy Nueva York está complicada 🕷️",
+    "No puedo responder ahora, pero sigo patrullando 🕷️",
+  ];
+
+  const randomReply =
+    fallbackReplies[Math.floor(Math.random() * fallbackReplies.length)];
+
   return res.status(200).json({
-    reply: "Ey, soy Spider-Man 🕷️. Algo salió mal en la red… pero sigo atento. ¿Qué necesitás?"
+    reply: randomReply
   });
-}
-}
+}}
