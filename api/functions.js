@@ -12,7 +12,7 @@ Reglas:
 - Responde breve
 `;
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   try {
     const { messages } = req.body;
 
