@@ -49,9 +49,22 @@ Reglas:
 
     const data = await response.json();
 
-    const reply =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No tengo respuesta ahora 🕷️";
+    const data = await response.json();
+
+console.log("GEMINI RESPONSE:", JSON.stringify(data));
+
+let reply = "No tengo respuesta ahora 🕷️";
+
+if (
+  data &&
+  data.candidates &&
+  data.candidates.length > 0 &&
+  data.candidates[0].content &&
+  data.candidates[0].content.parts &&
+  data.candidates[0].content.parts.length > 0
+) {
+  reply = data.candidates[0].content.parts[0].text;
+}
 
     return res.status(200).json({ reply });
 
