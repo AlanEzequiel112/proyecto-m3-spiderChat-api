@@ -159,16 +159,16 @@ async function handleSend() {
 function router() {
   const path = window.location.pathname;
 
+  const view = document.getElementById("view");
+
   if (path === "/" || path === "/home") {
     view.innerHTML = Home();
   } else if (path === "/chat") {
     view.innerHTML = Chat();
-    renderMessages();
-    setupChatEvents();
   } else if (path === "/about") {
     view.innerHTML = About();
   } else {
-    view.innerHTML = "<h2>404</h2>";
+    view.innerHTML = "<h1>404 - Página no encontrada</h1>";
   }
 }
 
