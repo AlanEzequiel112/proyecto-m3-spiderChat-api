@@ -108,30 +108,43 @@ async function handleSend() {
   renderMessages();
 
   // Mensaje temporal
-  addMessage("bot", "...");
+  addMessage("bot", "Escribiendo...");
   renderMessages();
 
   const chatContainer = document.getElementById("chat-container");
   chatContainer.scrollTop = chatContainer.scrollHeight;
 
   try {
-  const messages = getMessages();
+    const messages = getMessages();
 
-  const response = await fetch("/api/functions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages }),
-  });
+    const response = await fetch("/api/functions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages }),
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  messages[messages.length - 1].content = data.reply;
+    const lastMessage = messages[messages.length - 1];
 
-} catch (error) {
-  const messages = getMessages();
-  messages[messages.length - 1].content =
-    "Error al conectar con Spider-Man 🕷️";
-}
+    // render para que exista en DOM
+    renderMessages();
+
+    // agarrar último mensaje en pantalla
+    const messageElements = chatContainer.querySelectorAll(".message");
+    const lastElement = messageElements[messageElements.length - 1];
+
+    // animar escritura
+    await typeMessage(lastElement, data.reply);
+
+    // guardar contenido final
+    lastMessage.content = data.reply;
+
+  } catch (error) {
+    const messages = getMessages();
+    messages[messages.length - 1].content =
+      "Error al conectar con Spider-Man 🕷️";
+  }
 
   renderMessages();
 }
@@ -179,4 +192,13 @@ function isNearBottom(container) {
     container.scrollHeight - container.scrollTop - container.clientHeight <
     threshold
   );
+}
+
+async function typeMessage(element, text) {
+  element.textContent = "";
+
+  for (let i = 0; i < text.length; i++) {
+    element.textContent += text[i];
+    await new Promise((res) => setTimeout(res, 10));
+  }
 }
