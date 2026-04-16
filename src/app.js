@@ -127,7 +127,7 @@ async function handleSend() {
   } catch (error) {
     const messages = getMessages();
     messages[messages.length - 1].content =
-      "Ups... algo salió mal 🕷️";
+      "Error al conectar con Spider-Man 🕷️";
   }
 
   renderMessages();
