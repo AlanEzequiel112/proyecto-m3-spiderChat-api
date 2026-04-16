@@ -97,7 +97,11 @@ function renderMessages() {
 
 // ---------- CHAT LOGIC ----------
 
+let isSending = false;
+
 async function handleSend() {
+  if (isSending) return;
+isSending = true;
   const input = document.getElementById("message-input");
   const button = document.getElementById("send-btn");
 
@@ -137,9 +141,9 @@ async function handleSend() {
     msgs[msgs.length - 1].content =
       "Error al conectar con Spider-Man";
   } finally {
-    button.disabled = false;
-  }
-
+  button.disabled = false;
+  isSending = false;
+}
   renderMessages();
 }
 
