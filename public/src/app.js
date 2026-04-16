@@ -97,15 +97,13 @@ function renderMessages() {
 
 // ---------- CHAT LOGIC ----------
 
-const button = document.getElementById("send-btn");
-button.disabled = true;
-
 async function handleSend() {
   const input = document.getElementById("message-input");
+  const button = document.getElementById("send-btn");
+
   const text = input.value.trim();
   if (!text) return;
 
-  const button = document.getElementById("send-btn");
   button.disabled = true;
 
   // Usuario
@@ -114,7 +112,7 @@ async function handleSend() {
   renderMessages();
 
   // Mensaje temporal
-  addMessage("bot", "Escribiendo...");
+  addMessage("bot", "...");
   renderMessages();
 
   const chatContainer = document.getElementById("chat-container");
@@ -131,21 +129,12 @@ async function handleSend() {
 
     const data = await response.json();
 
-    const lastMessage = messages[messages.length - 1];
-
-    // render para que exista en DOM
-    renderMessages();
-
-    const messageElements = chatContainer.querySelectorAll(".message");
-    const lastElement = messageElements[messageElements.length - 1];
-
-    await typeMessage(lastElement, data.reply);
-
-    lastMessage.content = data.reply;
+    const msgs = getMessages();
+    msgs[msgs.length - 1].content = data.reply;
 
   } catch (error) {
-    const messages = getMessages();
-    messages[messages.length - 1].content =
+    const msgs = getMessages();
+    msgs[msgs.length - 1].content =
       "Error al conectar con Spider-Man";
   } finally {
     button.disabled = false;
@@ -159,12 +148,12 @@ async function handleSend() {
 function router() {
   const path = window.location.pathname;
 
-  const view = document.getElementById("view");
-
   if (path === "/" || path === "/home") {
     view.innerHTML = Home();
   } else if (path === "/chat") {
     view.innerHTML = Chat();
+    setupChatEvents();
+    renderMessages();
   } else if (path === "/about") {
     view.innerHTML = About();
   } else {
@@ -183,7 +172,7 @@ document.addEventListener("click", (e) => {
     history.pushState(null, null, href);
     router();
   }
-} );
+});
 
 window.addEventListener("popstate", router);
 
@@ -192,18 +181,9 @@ window.addEventListener("popstate", router);
 router();
 
 function isNearBottom(container) {
-  const threshold = 50; // margen en px
+  const threshold = 50;
   return (
     container.scrollHeight - container.scrollTop - container.clientHeight <
     threshold
   );
-}
-
-async function typeMessage(element, text) {
-  element.textContent = "";
-
-  for (let i = 0; i < text.length; i++) {
-    element.textContent += text[i];
-    await new Promise((res) => setTimeout(res, 10));
-  }
 }
