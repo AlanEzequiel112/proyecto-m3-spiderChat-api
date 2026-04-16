@@ -57,7 +57,7 @@ function setupChatEvents() {
   button.addEventListener("click", handleSend);
 
   input.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") handleSend();
+    if (e.key === "Enter" && !button.disabled) handleSend();
   });
 }
 
