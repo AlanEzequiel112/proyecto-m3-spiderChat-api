@@ -1,100 +1,139 @@
-console.log("VERSION NUEVA FUNCION");
+const FALLBACK_REPLIES = [
+  "Mis sensores arácnidos están algo confundidos 🕷️",
+  "Nueva York está caótica ahora mismo 🕷️",
+  "Estoy ocupado balanceándome entre edificios… intentá otra vez 🕷️",
+];
+
+function getRandomFallback() {
+  return FALLBACK_REPLIES[
+    Math.floor(Math.random() * FALLBACK_REPLIES.length)
+  ];
+}
 
 export default async function handler(req, res) {
+  // SOLO POST
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({
+      error: "Método no permitido",
+    });
   }
 
   try {
     const { messages } = req.body;
 
+    // VALIDAR MENSAJES
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({
+        error: "Mensajes inválidos",
+      });
+    }
+
+    // LIMITAR HISTORIAL
+    const limitedMessages = messages.slice(-10);
+
+    // API KEY
     const apiKey = process.env.GEMINI_API_KEY;
 
+    if (!apiKey) {
+      return res.status(500).json({
+        error: "Falta configurar GEMINI_API_KEY",
+      });
+    }
+
+    // TIMEOUT
+    const controller = new AbortController();
+
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+    }, 15000);
+
     const response = await fetch(
-  `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        signal: controller.signal,
         body: JSON.stringify({
           contents: [
-  {
-    role: "user",
-    parts: [{
-      text: `Eres Spider-Man (Peter Parker).
+            {
+              role: "user",
+              parts: [
+                {
+                  text: `
+Eres Spider-Man (Peter Parker).
 
 Personalidad:
-- Altruista, responsable
-- Sarcástico pero amable
-- Inteligente y analítico
+- Sarcástico
+- Divertido
+- Inteligente
 - Empático
+- Optimista
+- Inspirador
 
 Reglas:
-- Mantente en personaje
+- Mantente siempre en personaje
+- Habla como Spider-Man clásico de cómics
+- Usa humor ocasional
 - Responde breve
-`
-    }],
-  },
-  {
-    role: "model",
-    parts: [{ text: "Entendido. Actuaré como Spider-Man." }],
-  },
-  ...messages.map((msg) => ({
-    role: msg.role === "user" ? "user" : "model",
-    parts: [{ text: msg.content }],
-  })),
-]
+- Ayuda a las personas a mejorar
+- No rompas personaje
+                  `,
+                },
+              ],
+            },
+            {
+              role: "model",
+              parts: [
+                {
+                  text: "Entendido. Soy Spider-Man 🕷️",
+                },
+              ],
+            },
+            ...limitedMessages.map((msg) => ({
+              role: msg.role === "user" ? "user" : "model",
+              parts: [{ text: msg.content }],
+            })),
+          ],
         }),
       }
     );
 
+    clearTimeout(timeoutId);
+
     const data = await response.json();
 
+    // ERROR GEMINI
     if (data.error) {
-  const fallbackReplies = [
-    "Hmm… mis sensores arácnidos están fallando 🕷️. Intentá de nuevo en un rato.",
-    "Algo raro pasa en la ciudad… pero sigo atento 🕷️",
-    "No puedo responder ahora, pero sigo patrullando 🕷️",
-  ];
+      return res.status(500).json({
+        error: "Error de Gemini",
+        reply: getRandomFallback(),
+      });
+    }
 
-  const randomReply =
-    fallbackReplies[Math.floor(Math.random() * fallbackReplies.length)];
+    // EXTRAER RESPUESTA
+    const reply =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "No tengo respuesta ahora mismo 🕷️";
 
-  return res.status(200).json({
-    reply: randomReply
-  });
-}
-
-
-console.log("GEMINI RESPONSE:", JSON.stringify(data));
-
-let reply = "No tengo respuesta ahora 🕷️";
-
-if (
-  data &&
-  data.candidates &&
-  data.candidates.length > 0 &&
-  data.candidates[0].content &&
-  data.candidates[0].content.parts &&
-  data.candidates[0].content.parts.length > 0
-) {
-  reply = data.candidates[0].content.parts[0].text;
-}
-
-    return res.status(200).json({ reply });
+    return res.status(200).json({
+      reply,
+    });
 
   } catch (error) {
-  const fallbackReplies = [
-    "Ey, soy Spider-Man 🕷️. Algo salió mal en la red… pero sigo atento.",
-    "Hmm… hoy Nueva York está complicada 🕷️",
-    "No puedo responder ahora, pero sigo patrullando 🕷️",
-  ];
+    // TIMEOUT
+    if (error.name === "AbortError") {
+      return res.status(408).json({
+        error: "Timeout",
+        reply:
+          "Estoy atrapado en el tráfico de Nueva York 🕷️ Intentá otra vez.",
+      });
+    }
 
-  const randomReply =
-    fallbackReplies[Math.floor(Math.random() * fallbackReplies.length)];
-
-  return res.status(200).json({
-    reply: randomReply
-  });
-}}
+    return res.status(500).json({
+      error: "Error interno",
+      reply: getRandomFallback(),
+    });
+  }
+}
