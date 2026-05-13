@@ -6,23 +6,26 @@ const view = document.getElementById("view");
 
 function Home() {
   return `
-    <div class="home-view">
-      <h2>🕷️ Spider Chat</h2>
-      <p>Chatea con Spider-Man en tiempo real.</p>
+    <section class="home-view">
 
-      <a href="/chat" data-link class="start-btn">
-        Empezar chat
-      </a>
-    </div>
+      <div class="hero-card">
+        <h1>🕷️ Spider Chat</h1>
+
+        <p class="hero-text">
+          Habla con Spider-Man como si estuvieras en Nueva York.
+          Humor, consejos y respuestas rápidas del héroe más amistoso.
+        </p>
+
+        <a href="/chat" data-link class="start-btn">
+          Empezar chat
+        </a>
+      </div>
+
+    </section>
   `;
 }
 
-function About() {
-  return `
-    <h2>About</h2>
-    <p>Proyecto SPA con Gemini AI</p>
-  `;
-}
+
 
 function Chat() {
   return `
@@ -38,11 +41,51 @@ function Chat() {
       <main class="chat-container" id="chat-container"></main>
 
       <footer class="chat-input">
-        <input id="message-input" placeholder="Escribe un mensaje"/>
+        <input 
+             id="message-input" 
+             placeholder="Habla con Spider-Man..."
+             maxlength="300"
+            />
         <button id="send-btn">Enviar</button>
       </footer>
 
     </div>
+  `;
+}
+
+function About() {
+  return `
+    <section class="about-view">
+
+      <div class="about-card">
+        <h2>Sobre Spider Chat</h2>
+
+        <p>
+          Spider Chat es una SPA desarrollada con JavaScript Vanilla,
+          History API y Gemini AI.
+        </p>
+
+        <p>
+          El proyecto simula conversaciones con Spider-Man manteniendo
+          su personalidad sarcástica, optimista y amigable.
+        </p>
+
+        <p>
+          Tecnologías utilizadas:
+        </p>
+
+        <ul>
+          <li>HTML5</li>
+          <li>CSS3</li>
+          <li>JavaScript Vanilla</li>
+          <li>Vercel Functions</li>
+          <li>Gemini AI</li>
+          <li>Vitest</li>
+        </ul>
+
+      </div>
+
+    </section>
   `;
 }
 
@@ -106,7 +149,11 @@ isSending = true;
   const button = document.getElementById("send-btn");
 
   const text = input.value.trim();
-  if (!text) return;
+  if (!text) {
+  input.focus();
+  isSending = false;
+  return;
+}
 
   button.disabled = true;
 
