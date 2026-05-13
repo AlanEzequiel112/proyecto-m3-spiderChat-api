@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "echo dev",
-    "build": "echo build",
+    "dev": "npx serve src",
     "test": "vitest",
     "test:run": "vitest run"
   },
   "devDependencies": {
+    "serve": "^14.2.6",
     "vitest": "^1.6.0"
   }
 }
