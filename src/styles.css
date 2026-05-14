@@ -481,3 +481,23 @@ body::before {
   box-shadow:
     0 0 12px rgba(239, 68, 68, 0.18);
 }
+
+#clear-btn {
+  background: transparent;
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  color: white;
+
+  border-radius: 999px;
+
+  padding: 0 16px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+#clear-btn:hover {
+  background: rgba(255,255,255,0.06);
+}

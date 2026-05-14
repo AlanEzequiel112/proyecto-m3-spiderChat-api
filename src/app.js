@@ -1,4 +1,4 @@
-import { addMessage, getMessages } from "./chat.js";
+import {addMessage, getMessages, updateLastMessage, clearMessages,} from "./chat.js";
 
 const view = document.getElementById("view");
 
@@ -43,13 +43,20 @@ function Chat() {
       <div id="chat-alert" class="chat-alert hidden"></div>
 
       <footer class="chat-input">
-        <input 
-             id="message-input" 
-             placeholder="Habla con Spider-Man..."
-             maxlength="300"
-            />
-        <button id="send-btn">Enviar</button>
-      </footer>
+  <input 
+    id="message-input" 
+    placeholder="Habla con Spider-Man..."
+    maxlength="300"
+  />
+
+  <button id="send-btn">
+    Enviar
+  </button>
+
+  <button id="clear-btn">
+    Limpiar
+  </button>
+</footer>
 
     </div>
   `;
@@ -96,10 +103,16 @@ function About() {
 function setupChatEvents() {
   const input = document.getElementById("message-input");
   const button = document.getElementById("send-btn");
+  const clearBtn = document.getElementById("clear-btn");
 
-  if (!input || !button) return;
+  if (!input || !button || !clearBtn) return;
 
   button.addEventListener("click", handleSend);
+
+  clearBtn.addEventListener("click", () => {
+    clearMessages();
+    renderMessages();
+  });
 
   input.addEventListener("keypress", (e) => {
     if (e.key === "Enter" && !isSending) handleSend();
@@ -235,8 +248,7 @@ clearTimeout(timeoutId);
 
     const data = await response.json();
 
-    const msgs = getMessages();
-    msgs[msgs.length - 1].content = data.reply;
+updateLastMessage(data.reply);
 
   } catch (error) {
     const msgs = getMessages();
