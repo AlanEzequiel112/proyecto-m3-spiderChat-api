@@ -108,7 +108,7 @@ Reglas:
     // ERROR GEMINI
     if (data.error) {
 
-  return res.status(500).json({
+  return res.status(200).json({
     error: "Error de Gemini",
     reply: getRandomFallback(),
   });
@@ -133,7 +133,7 @@ Reglas:
       });
     }
 
-    return res.status(500).json({
+    return res.status(200).json({
       error: "Error interno",
       reply: getRandomFallback(),
     });
