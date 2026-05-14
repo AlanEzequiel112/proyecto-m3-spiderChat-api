@@ -40,6 +40,8 @@ function Chat() {
 
       <main class="chat-container" id="chat-container"></main>
 
+      <div id="chat-alert" class="chat-alert hidden"></div>
+
       <footer class="chat-input">
         <input 
              id="message-input" 
@@ -138,12 +140,29 @@ function renderMessages() {
   }
 }
 
+function showChatAlert(message) {
+  const alert = document.getElementById("chat-alert");
+  if (!alert) return;
+
+  alert.textContent = message;
+  alert.classList.remove("hidden");
+}
+
+function hideChatAlert() {
+  const alert = document.getElementById("chat-alert");
+  if (!alert) return;
+
+  alert.textContent = "";
+  alert.classList.add("hidden");
+}
+
 // ---------- CHAT LOGIC ----------
 
 let isSending = false;
 
 async function handleSend() {
   if (isSending) return;
+    hideChatAlert();
 isSending = true;
   const input = document.getElementById("message-input");
   const button = document.getElementById("send-btn");
@@ -170,13 +189,24 @@ isSending = true;
   chatContainer.scrollTop = chatContainer.scrollHeight;
 
   try {
-    const messages = getMessages();
+  const messages = getMessages().filter(
+    (msg) => msg.content !== "Escribiendo..."
+  );
 
-    const response = await fetch("/api/functions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages }),
-    });
+  const controller = new AbortController();
+
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, 15000);
+
+  const response = await fetch("/api/functions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages }),
+    signal: controller.signal,
+  });
+
+clearTimeout(timeoutId);
 
     const data = await response.json();
 
@@ -185,8 +215,12 @@ isSending = true;
 
   } catch (error) {
     const msgs = getMessages();
-    msgs[msgs.length - 1].content =
-      "Error al conectar con Spider-Man";
+   msgs[msgs.length - 1].content =
+  "No pude conectar con Spider-Man en este momento.";
+
+showChatAlert(
+  "Hubo un problema de conexión. Revisá internet o intentá nuevamente en unos segundos."
+);
   } finally {
   button.disabled = false;
   isSending = false;

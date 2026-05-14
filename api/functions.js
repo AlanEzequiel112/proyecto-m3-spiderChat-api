@@ -1,7 +1,7 @@
 const FALLBACK_REPLIES = [
-  "Mis sensores arácnidos están algo confundidos 🕷️",
-  "Nueva York está caótica ahora mismo 🕷️",
-  "Estoy ocupado balanceándome entre edificios… intentá otra vez 🕷️",
+  "Mis sensores arácnidos están saturados ahora mismo. Probá de nuevo en un momento.",
+  "La red está más enredada que mis telarañas. Intentá otra vez en un rato.",
+  "Ahora mismo no puedo conectar bien, pero un héroe también sabe esperar y volver a intentarlo.",
 ];
 
 function getRandomFallback() {
@@ -88,7 +88,7 @@ Reglas:
               role: "model",
               parts: [
                 {
-                  text: "Entendido. Soy Spider-Man 🕷️",
+                  text: "Entendido. Soy Spider-Man",
                 },
               ],
             },
@@ -117,7 +117,7 @@ Reglas:
     // EXTRAER RESPUESTA
     const reply =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No tengo respuesta ahora mismo 🕷️";
+      "No tengo respuesta ahora mismo. Intentá otra vez en un momento.";
 
     return res.status(200).json({
       reply,
@@ -129,7 +129,7 @@ Reglas:
       return res.status(408).json({
         error: "Timeout",
         reply:
-          "Estoy atrapado en el tráfico de Nueva York 🕷️ Intentá otra vez.",
+          "Estoy atrapado en el tráfico de Nueva York. Intentá otra vez en un momento.",
       });
     }
 
