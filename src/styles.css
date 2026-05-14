@@ -453,3 +453,31 @@ body::before {
   position: relative;
   z-index: 1;
 }
+
+.bot-message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.bot-logo {
+  width: 30px;
+  height: 30px;
+  
+  padding: 5px;
+
+  border-radius: 50%;
+
+  background-color: rgba(239, 68, 68, 0.12);
+
+  border: 1px solid rgba(239, 68, 68, 0.45);
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+
+  scale: 1.7;
+
+  box-shadow:
+    0 0 12px rgba(239, 68, 68, 0.18);
+}

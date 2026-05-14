@@ -128,12 +128,32 @@ function renderMessages() {
   spacer.style.flex = "1";
   chatContainer.appendChild(spacer);
 
-  messages.forEach((msg) => {
-    const div = document.createElement("div");
-    div.classList.add("message", msg.role === "user" ? "user" : "bot");
+ messages.forEach((msg) => {
+  const div = document.createElement("div");
+
+  div.classList.add(
+    "message",
+    msg.role === "user" ? "user" : "bot"
+  );
+
+  if (msg.role === "bot") {
+    div.innerHTML = `
+      <div class="bot-message-content">
+        <img
+          src="/src/spider-logo-2.png"
+          alt="Spider Logo"
+          class="bot-logo"
+        />
+
+        <span>${msg.content}</span>
+      </div>
+    `;
+  } else {
     div.textContent = msg.content;
-    chatContainer.appendChild(div);
-  });
+  }
+
+  chatContainer.appendChild(div);
+});
 
   if (shouldScroll) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
