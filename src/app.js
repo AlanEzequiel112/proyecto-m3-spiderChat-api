@@ -157,7 +157,8 @@ function hideChatAlert() {
 }
 
 // ---------- CHAT LOGIC ----------
-
+const DEBUG_FORCE_ERROR = false;
+// pueden probar el mensaje de error, al modificarlo por true.
 let isSending = false;
 
 async function handleSend() {
@@ -193,6 +194,10 @@ isSending = true;
     (msg) => msg.content !== "Escribiendo..."
   );
 
+  if (DEBUG_FORCE_ERROR) {
+  throw new Error("Error forzado para probar aviso visual");
+}
+
   const controller = new AbortController();
 
   const timeoutId = setTimeout(() => {
@@ -219,7 +224,7 @@ clearTimeout(timeoutId);
   "No pude conectar con Spider-Man en este momento.";
 
 showChatAlert(
-  "Hubo un problema de conexión. Revisá internet o intentá nuevamente en unos segundos."
+  "No se pudo contactar con Spider-Man en este momento. Intentá nuevamente en unos segundos."
 );
   } finally {
   button.disabled = false;
