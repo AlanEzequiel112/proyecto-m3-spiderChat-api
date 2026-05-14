@@ -67,7 +67,29 @@ function About() {
     <section class="about-view">
 
       <div class="about-card">
-        <h2>Sobre Spider Chat</h2>
+
+        <div class="character-card">
+          <img
+            src="/src/spider-logo-2.png"
+            alt="Spider-Man logo"
+            class="character-logo"
+          />
+
+          <div>
+            <span class="character-label">
+              Meet the character
+            </span>
+
+            <h2>Spider-Man</h2>
+
+            <p>
+              Un héroe amistoso de Nueva York, sarcástico,
+              optimista y siempre listo para ayudarte.
+            </p>
+          </div>
+        </div>
+
+        <h3>Sobre Spider Chat</h3>
 
         <p>
           Spider Chat es una SPA desarrollada con JavaScript Vanilla,
