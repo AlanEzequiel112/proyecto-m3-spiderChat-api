@@ -34,11 +34,12 @@ export default async function handler(req, res) {
     // API KEY
     const apiKey = process.env.GEMINI_API_KEY;
 
-    if (!apiKey) {
-      return res.status(500).json({
-        error: "Falta configurar GEMINI_API_KEY",
-      });
-    }
+   if (!apiKey) {
+  return res.status(200).json({
+    error: "Falta configurar GEMINI_API_KEY",
+    reply: "No se pudo contactar con Spider-Man en este momento. Intentá nuevamente en unos segundos.",
+  });
+}
 
     // TIMEOUT
     const controller = new AbortController();
