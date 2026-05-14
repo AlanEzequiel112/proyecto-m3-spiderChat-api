@@ -9,7 +9,14 @@ function Home() {
     <section class="home-view">
 
       <div class="hero-card">
-        <h1>🕷️ Spider Chat</h1>
+
+        <img
+          src="/src/spider-logo-2.png"
+          alt="Spider-Man logo"
+          class="hero-logo"
+        />
+
+        <h1>Spider Chat</h1>
 
         <p class="hero-text">
           Habla con Spider-Man como si estuvieras en Nueva York.
@@ -19,6 +26,7 @@ function Home() {
         <a href="/chat" data-link class="start-btn">
           Empezar chat
         </a>
+
       </div>
 
     </section>
