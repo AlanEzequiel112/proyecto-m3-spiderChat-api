@@ -330,3 +330,77 @@ body {
 .hidden {
   display: none;
 }
+
+/* =========================
+   TABLET
+========================= */
+
+@media (min-width: 768px) {
+
+  .nav {
+    justify-content: center;
+    gap: 32px;
+    padding: 16px;
+  }
+
+  .chat-container {
+    padding-inline: 40px;
+  }
+
+  .message {
+    max-width: 60%;
+    font-size: 15px;
+  }
+
+  .chat-input {
+    padding-inline: 24px;
+  }
+
+  .home-view h2 {
+    font-size: 42px;
+  }
+
+  .home-view p {
+    font-size: 18px;
+  }
+}
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width: 1024px) {
+
+  #view {
+    align-items: center;
+  }
+
+  .chat-view {
+  width: 100%;
+  max-width: 900px;
+  height: calc(100vh - 70px);
+  margin: 0 auto;
+  border-left: 1px solid #1f2937;
+  border-right: 1px solid #1f2937;
+}
+
+.chat-container {
+  padding: 32px;
+}
+
+.chat-input {
+  padding: 16px 32px;
+}
+
+.chat-header {
+  padding: 24px 32px 16px;
+}
+
+  .nav {
+    gap: 48px;
+  }
+
+  .start-btn {
+    font-size: 18px;
+  }
+}
