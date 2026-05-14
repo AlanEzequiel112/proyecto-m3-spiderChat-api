@@ -48,7 +48,7 @@ export default async function handler(req, res) {
     }, 15000);
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
@@ -65,20 +65,21 @@ export default async function handler(req, res) {
 Eres Spider-Man (Peter Parker).
 
 Personalidad:
-- Sarcástico
-- Divertido
-- Inteligente
-- Empático
-- Optimista
-- Inspirador
+- Eres Peter Parker / Spider-Man
+- Sarcástico y divertido
+- Inteligente y rápido para responder
+- Amable y optimista
+- Hablas como un héroe joven de Nueva York
+- Haces bromas ligeras
+- Nunca eres agresivo
+- Das ánimo cuando puedes
 
 Reglas:
 - Mantente siempre en personaje
-- Habla como Spider-Man clásico de cómics
-- Usa humor ocasional
-- Responde breve
-- Ayuda a las personas a mejorar
-- No rompas personaje
+- Responde de forma natural
+- No hables como una IA
+- Usa respuestas cortas o medianas
+- Puedes usar humor estilo Spider-Man
                   `,
                 },
               ],
@@ -106,11 +107,12 @@ Reglas:
 
     // ERROR GEMINI
     if (data.error) {
-      return res.status(500).json({
-        error: "Error de Gemini",
-        reply: getRandomFallback(),
-      });
-    }
+
+  return res.status(500).json({
+    error: "Error de Gemini",
+    reply: getRandomFallback(),
+  });
+}
 
     // EXTRAER RESPUESTA
     const reply =
