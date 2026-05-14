@@ -129,7 +129,9 @@ body {
   font-size: 14px;
   line-height: 1.4;
   transition: 0.2s ease;
+  animation: fadeIn 0.25s ease;
 }
+
 
 /* Usuario */
 .message.user {
@@ -500,4 +502,16 @@ body::before {
 
 #clear-btn:hover {
   background: rgba(255,255,255,0.06);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

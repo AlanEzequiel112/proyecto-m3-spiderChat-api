@@ -106,6 +106,7 @@ function setupChatEvents() {
   const clearBtn = document.getElementById("clear-btn");
 
   if (!input || !button || !clearBtn) return;
+  input.focus();
 
   button.addEventListener("click", handleSend);
 
