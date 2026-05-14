@@ -576,3 +576,30 @@ body::before {
   box-shadow:
     0 0 20px rgba(239, 68, 68, 0.15);
 }
+
+@media (max-width: 480px) {
+  .chat-input {
+    flex-wrap: wrap;
+  }
+
+  .chat-input input {
+    flex-basis: 100%;
+  }
+
+  .chat-input button {
+    flex: 1;
+  }
+
+  #clear-btn {
+    padding: 10px 12px;
+  }
+
+  .about-view {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .about-card {
+    margin: 16px 0;
+  }
+}
