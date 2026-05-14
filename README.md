@@ -39,14 +39,16 @@ El proyecto implementa una arquitectura moderna basada en frontend desacoplado y
 ├── api/
 │   └── functions.js
 ├── src/
+│   ├── index.html
 │   ├── app.js
 │   ├── chat.js
 │   ├── utils.js
-│   └── styles.css
+│   ├── styles.css
+│   ├── spider-logo.png
+│   └── spider-logo-2.png
 ├── tests/
 │   ├── app.test.js
 │   └── utils.test.js
-├── index.html
 ├── .env.example
 ├── .gitignore
 ├── package.json
@@ -70,7 +72,7 @@ El proyecto implementa una arquitectura moderna basada en frontend desacoplado y
 - Timeout frontend y backend
 - Filtrado de mensajes temporales
 
----
+--- 
 
 ## 🔄 Funcionamiento
 

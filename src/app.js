@@ -281,21 +281,23 @@ clearTimeout(timeoutId);
 
 updateLastMessage(data.reply);
 
-  } catch (error) {
-    const msgs = getMessages();
-   msgs[msgs.length - 1].content =
-  "No pude conectar con Spider-Man en este momento.";
+} catch (error) {
 
-showChatAlert(
-  "No se pudo contactar con Spider-Man en este momento. Intentá nuevamente en unos segundos."
-);
-  } finally {
+  updateLastMessage(
+    "No pude conectar con Spider-Man en este momento."
+  );
+
+  showChatAlert(
+    "No se pudo contactar con Spider-Man en este momento. Intentá nuevamente en unos segundos."
+  );
+
+} finally {
   button.disabled = false;
   isSending = false;
 }
-  renderMessages();
-}
 
+renderMessages();
+}
 // ---------- ROUTER ----------
 
 function router() {
