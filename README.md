@@ -26,30 +26,32 @@ El proyecto implementa una arquitectura moderna basada en frontend desacoplado y
 - Fetch API + async/await
 - Gemini AI (Google)
 - Vercel (Serverless Functions)
+- Vitest
+- Vercel CLI
 
 ---
 
 ## 📦 Estructura del proyecto
+
+```txt
 /
 ├── api/
-│ └── functions.js # Serverless function (backend - Gemini proxy)
-├── public/
-│ ├── index.html
-│ └── src/
-│ ├── app.js # Lógica principal y routing SPA
-│ ├── chat.js # Manejo del chat y mensajes
-│ ├── utils.js # Funciones auxiliares
-│ └── styles.css # Estilos de la aplicación
+│   └── functions.js
+├── src/
+│   ├── app.js
+│   ├── chat.js
+│   ├── utils.js
+│   └── styles.css
 ├── tests/
-│ ├── app.test.js # Tests de lógica principal
-│ └── utils.test.js # Tests de utilidades
-├── .env # Variables de entorno (local)
-├── .env.example # Ejemplo de configuración
+│   ├── app.test.js
+│   └── utils.test.js
+├── index.html
+├── .env.example
 ├── .gitignore
 ├── package.json
-├── vercel.json # Configuración de rutas y deploy
+├── vercel.json
 └── README.md
-
+```
 
 ---
 
@@ -63,6 +65,9 @@ El proyecto implementa una arquitectura moderna basada en frontend desacoplado y
 - Routing con History API
 - Diseño responsive (mobile-first)
 - Manejo de estados de error y carga
+- Alertas visuales ante errores de conexión
+- Timeout frontend y backend
+- Filtrado de mensajes temporales
 
 ---
 
@@ -96,9 +101,37 @@ La aplicación implementa manejo de errores robusto para asegurar continuidad:
 
 Se devuelven respuestas fallback con personalidad del personaje, evitando que la aplicación se rompa:
 
-> "Hmm… mis sensores arácnidos están fallando 🕷️..."
+> "No se pudo contactar con Spider-Man en este momento. Intentá nuevamente en unos segundos."
 
 Esto garantiza una experiencia de usuario consistente.
+
+---
+
+## ⚙️ Instalación local
+
+1. Clonar el repositorio
+
+```bash
+git clone https://github.com/AlanEzequiel112/proyecto-m3-spiderChat-api.git
+```
+
+2. Instalar dependencias
+
+```bash
+npm install
+```
+
+3. Crear archivo `.env`
+
+```env
+GEMINI_API_KEY=TU_API_KEY
+```
+
+4. Ejecutar entorno local
+
+```bash
+vercel dev
+```
 
 ---
 
